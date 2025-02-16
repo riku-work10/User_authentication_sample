@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :fix_session_params, if: -> { params[:session].present? } # 追加
+  before_action :fix_registration_params, if: -> { params[:registration].present? } # 追加
 
   protected
 
@@ -16,5 +17,10 @@ class ApplicationController < ActionController::API
   def fix_session_params
     params.merge!(params[:session].to_unsafe_h)
     params.delete(:session) # session キーを削除
+  end
+
+  def fix_registration_params
+    params.merge!(params[:registration].to_unsafe_h)
+    params.delete(:registration) # registration キーを削除
   end
 end
